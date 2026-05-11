@@ -1,0 +1,29 @@
+{
+  "signal": {
+    "items": [
+      "Aulas 5, 6, 7",
+      "Apoyo Informático",
+      "Servidores",
+      "Laboratorio 1 y 2",
+      "Coordinación\nInformática Empresarial"
+    ],
+    "footer": "UCR",
+    "linkTo": "poster"
+  },
+  "poster": {
+    "badge1": "LA SEDE",
+    "badge2": "TE",
+    "textoAcompana": "ACOMPAÑA",
+    "lineaRespeto": "El respeto no se negocia",
+    "linea_para": "¡Pará ya de acosar!",
+    "qrTexto": "Si necesitás ayuda,\nescaneá este QR:",
+    "qrSrc": "./assets/qr.png",
+    "fotoSrc": "./assets/poster.png",
+    "logoUcr": "UCR",
+    "libreLinea1": "UCR",
+    "libreLinea2": "LIBRE DE\nACOSO\nSEXUAL",
+    "sgLetras": "SG",
+    "sedeNombre": "Sede de\nGuanacaste",
+    "linkTo": "index"
+  }
+}
