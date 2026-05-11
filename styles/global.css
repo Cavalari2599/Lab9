@@ -1,0 +1,436 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   global.css — Estilos globales del Lab 2 Web Components
+   Aplica a: <signal-ucr> y <poster-acoso>
+   El CSS es global (sin Shadow DOM) tal como el lab original.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:ital,wght@0,400;0,700;1,700&display=swap');
+
+/* ── Tokens compartidos ─────────────────────────────────────────────────── */
+:root {
+  /* Colores */
+  --dorado:      #c9a227;
+  --morado:      #6b2fa0;
+  --azul:        #1c3872;
+  --azul-claro:  #2196c4;
+  --azul-hover:  #254fa8;
+  --gris-footer: #dde3ed;
+  --blanco:      #ffffff;
+  --negro:       #1a1a1a;
+
+  /* Anchos */
+  --ancho-signal: 320px;
+  --ancho-poster: 380px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Body base (centro vertical) ────────────────────────────────────────── */
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  min-height: 100vh;
+  font-family: 'Barlow', sans-serif;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   SIGNAL-UCR — Señalética
+   ════════════════════════════════════════════════════════════════════════════ */
+
+/* El body de index.html recibe fondo gris */
+body:has(signal-ucr) {
+  background: #eef1f7;
+}
+
+signal-ucr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Contenedor azul oscuro */
+signal-ucr .contenedor {
+  width: var(--ancho-signal);
+  background: var(--azul);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(28, 56, 114, 0.35);
+  animation: entrada 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes entrada {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Filas */
+signal-ucr .item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--blanco);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  animation: fila-entra 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(0.08s * var(--i) + 0.2s);
+  transition: background 0.25s ease, padding-left 0.25s ease;
+}
+
+@keyframes fila-entra {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+signal-ucr .item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0);
+  transition: background 0.25s ease;
+  pointer-events: none;
+}
+
+signal-ucr .item:hover {
+  background: var(--azul-hover);
+  padding-left: 26px;
+}
+
+signal-ucr .item:hover::after {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* Flecha */
+signal-ucr .flecha {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: rgba(255, 255, 255, 0.65);
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+signal-ucr .item:hover .flecha {
+  transform: translateX(5px);
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* Ola + footer */
+signal-ucr .footer-wrap {
+  position: relative;
+  background: var(--gris-footer);
+  line-height: 0;
+}
+
+signal-ucr .ola {
+  width: 100%;
+  height: 44px;
+  display: block;
+  animation: ola-sube 3.5s ease-in-out infinite alternate;
+  transform-origin: bottom center;
+}
+
+@keyframes ola-sube {
+  0%   { transform: scaleY(1)    translateY(0); }
+  50%  { transform: scaleY(1.08) translateY(-2px); }
+  100% { transform: scaleY(0.95) translateY(2px); }
+}
+
+signal-ucr .footer {
+  background: var(--gris-footer);
+  color: var(--azul);
+  text-align: center;
+  padding: 10px 16px 18px;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 6px;
+  line-height: 1;
+}
+
+/* Botón "Ir a No Acoso" */
+signal-ucr .btn {
+  display: inline-block;
+  padding: 10px 24px;
+  background: var(--azul);
+  color: var(--blanco);
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  transition: background 0.25s ease, transform 0.2s ease;
+  animation: entrada 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both;
+}
+
+signal-ucr .btn:hover {
+  background: var(--azul-hover);
+  transform: translateY(-2px);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   POSTER-ACOSO — Afiche La Sede Te Acompaña
+   ════════════════════════════════════════════════════════════════════════════ */
+
+body:has(poster-acoso) {
+  background: #d4a82a;
+}
+
+poster-acoso {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Tarjeta dorada */
+poster-acoso .poster {
+  width: var(--ancho-poster);
+  background: var(--dorado);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+  animation: aparece 0.7s cubic-bezier(0.22,1,0.36,1) both;
+}
+
+@keyframes aparece {
+  from { opacity: 0; transform: scale(0.95) translateY(20px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0); }
+}
+
+/* Título ¡LA SEDE TE ACOMPAÑA! */
+poster-acoso .titulo-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 28px 20px 10px;
+  animation: baja 0.6s cubic-bezier(0.22,1,0.36,1) 0.1s both;
+}
+
+@keyframes baja {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+poster-acoso .exclamacion {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 52px;
+  line-height: 1;
+  color: var(--azul-claro);
+  animation: pulso 2.5s ease-in-out infinite;
+}
+
+@keyframes pulso {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.08); }
+}
+
+poster-acoso .exclamacion.der { animation-delay: 0.3s; }
+
+poster-acoso .titulo-bloque {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+poster-acoso .linea-1,
+poster-acoso .linea-2 {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+poster-acoso .badge {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 28px;
+  letter-spacing: 1px;
+  color: var(--blanco);
+  padding: 3px 10px 4px;
+  border-radius: 4px;
+  line-height: 1;
+}
+
+poster-acoso .badge.morado { background: var(--morado); }
+poster-acoso .badge.azul   { background: var(--azul-claro); }
+
+poster-acoso .texto-acompana {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 32px;
+  color: var(--blanco);
+  letter-spacing: 1px;
+  text-shadow: 1px 2px 0 rgba(0,0,0,0.2);
+}
+
+/* Subtítulo */
+poster-acoso .subtitulo {
+  text-align: center;
+  padding: 14px 24px 8px;
+  animation: baja 0.6s cubic-bezier(0.22,1,0.36,1) 0.2s both;
+}
+
+poster-acoso .linea-respeto {
+  font-size: 18px;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--negro);
+  margin-bottom: 2px;
+}
+
+poster-acoso .linea-para {
+  font-size: 20px;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--morado);
+}
+
+/* QR */
+poster-acoso .qr-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 0 12px;
+  animation: baja 0.6s cubic-bezier(0.22,1,0.36,1) 0.3s both;
+}
+
+poster-acoso .qr-texto {
+  font-size: 11px;
+  color: rgba(0,0,0,0.6);
+  text-align: center;
+  line-height: 1.4;
+}
+
+poster-acoso .qr-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 4px;
+  background: #fff;
+  padding: 4px;
+  display: block;
+}
+
+/* Imagen principal */
+poster-acoso .imagen-wrap {
+  display: flex;
+  width: 60%;
+  margin: 0 auto;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  animation: sube 0.7s cubic-bezier(0.22,1,0.36,1) 0.35s both;
+}
+
+@keyframes sube {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+poster-acoso .foto {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* Footer blanco */
+poster-acoso .footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: var(--blanco);
+  padding: 12px 20px;
+  animation: baja 0.6s cubic-bezier(0.22,1,0.36,1) 0.5s both;
+}
+
+poster-acoso .logo-ucr {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 26px;
+  color: var(--azul-claro);
+  letter-spacing: 1px;
+}
+
+poster-acoso .separador {
+  width: 1px;
+  height: 36px;
+  background: #ccc;
+}
+
+poster-acoso .logo-libre {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.1;
+}
+
+poster-acoso .libre-titulo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 13px;
+  color: var(--azul-claro);
+}
+
+poster-acoso .libre-sub {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--morado);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  line-height: 1.3;
+}
+
+poster-acoso .logo-sede {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+poster-acoso .sg {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 22px;
+  color: var(--negro);
+}
+
+poster-acoso .sede-texto {
+  font-size: 10px;
+  color: #555;
+  line-height: 1.4;
+}
+
+/* Botón ← Volver */
+poster-acoso .btn-volver {
+  display: inline-block;
+  padding: 10px 24px;
+  background: var(--azul);
+  color: var(--blanco);
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  transition: background 0.25s ease, transform 0.2s ease;
+  animation: aparece 0.6s cubic-bezier(0.22,1,0.36,1) 0.5s both;
+}
+
+poster-acoso .btn-volver:hover {
+  background: var(--azul-hover);
+  transform: translateY(-2px);
+}

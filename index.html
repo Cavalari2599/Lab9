@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Señal UCR</title>
+  <link rel="stylesheet" href="./styles/global.css">
+  <!-- Carga el componente directamente; main.js inyecta los atributos desde el JSON -->
+  <script type="module" src="./main.js"></script>
+</head>
+<body>
+  <!--
+    El componente <signal-ucr> se registra en main.js.
+    Los atributos se inyectan también desde main.js leyendo anuncios.json.
+    Puedes pasarlos también inline si querés omitir el JSON:
+
+    <signal-ucr
+      items='["Aulas 5, 6, 7","Apoyo Informático","Servidores","Laboratorio 1 y 2","Coordinación\nInformática Empresarial"]'
+      footer-text="UCR"
+      link-to="poster.html"
+    ></signal-ucr>
+  -->
+  <signal-ucr></signal-ucr>
+</body>
+</html>
